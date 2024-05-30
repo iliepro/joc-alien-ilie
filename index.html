@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alien</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Alien</h1>
+  <button id="start-button">Start Game</button>
+  <button id="end-turn-button">End Turn</button>
+  <div id="player1-container" class="player-container">
+    <div class="player-header">
+      <img src="img/perfil1.jpeg" class="avatar" id="player1-avatar">
+      <h2>Player 1</h2>
+    </div>
+    <div class="cards" id="player1-cards"></div>
+  </div>
+  <div id="center-container">
+    <div id="deck-container" class="card">
+      <img src="img/reversecard.jpg" alt="Deck">
+    </div>
+    <div id="current-card-container" class="card"></div>
+    <div id="bounty-hunter-pile" class="card"></div> <!-- Nou contenidor per la pila de Bounty Hunter -->
+  </div>
+  <div id="player2-container" class="player-container">
+    <div class="player-header">
+      <img src="img/perfil2.jpeg" class="avatar" id="player2-avatar">
+      <h2>Player 2</h2>
+    </div>
+    <div class="cards" id="player2-cards"></div>
+  </div>
+  <div id="player1-prison" class="prison">
+    <h3>Prison</h3>
+  </div>
+  <div id="player2-prison" class="prison">
+    <h3>Prison</h3>
+  </div>
+
+  <script src="game.js" type="module"></script>
+</body>
+</html>

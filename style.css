@@ -1,0 +1,328 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  background-image: url('img/background.avif');
+  background-size: cover;
+  background-position: center;
+}
+
+#start-button, #end-turn-button {
+  position: absolute;
+  left: 20px;
+  margin: 100px;
+  padding: 15px 40px;
+  border: none;
+  outline: none;
+  color: #FFF;
+  cursor: pointer;
+  z-index: 0;
+  border-radius: 12px;
+}
+
+#start-button {
+  top: 20px;
+}
+
+#end-turn-button {
+  top: 120px;
+}
+
+#start-button::after, #end-turn-button::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+/* glow */
+#start-button::before, #end-turn-button::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #FF0000, #FF7300, #FFFB00, #48FF00,
+    #00FFD5, #002BFF, #FF00C8, #FF0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height:  calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {background-position: 0 0;}
+  50% {background-position: 400% 0;}
+  100% {background-position: 0 0;}
+}
+
+/* hover */
+#start-button:hover::before, #end-turn-button:hover::before {
+  opacity: 1;
+}
+
+#start-button:active:after, #end-turn-button:active:after {
+  background: transparent;
+}
+
+#start-button:active, #end-turn-button:active {
+  color: #000;
+  font-weight: bold;
+}
+
+#player1-container, #player2-container {
+  position: absolute;
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  width: fit-content;
+  max-width: 100%;  
+  border: 5px solid rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+#player1-container {
+  bottom: 0;
+  left: 0;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#player2-container {
+  top: 0;
+  right: 0;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#center-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.current-card img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.player-container .cards {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+h2 {
+  margin: 0;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+}
+
+.aliens {
+  background-color: #bbceff;
+}
+
+.aliens .top-value,
+.aliens .bottom-value {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.aliens .top-value {
+  border-bottom: 1px solid #000;
+}
+
+.aliens .bottom-value {
+  border-top: 1px solid #000;
+}
+
+.aliens img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.capture {
+  background-color: #ffccbc;
+}
+
+.bountyHunter {
+  background-color: #c8e6c9;
+}
+
+.card-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card.dragging {
+  opacity: 0.5;
+}
+
+#current-card-container.dragover {
+  border: 2px dashed #000;
+}
+
+@keyframes dropDown {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.new-card {
+  animation: dropDown 0.5s ease-out;
+}
+
+/* Icones d'avatar dels jugadors */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.5s ease;
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { box-shadow: 0 0 5px 5px rgba(255, 255, 0, 0.5); }
+  50% { box-shadow: 0 0 5px 5px rgba(255, 255, 0, 1); }
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+}
+
+#player1-prison, #player2-prison {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  width: fit-content;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#player1-prison {
+  bottom: 300px;
+  left: 10px;
+  flex-direction: row;
+  align-items: flex-start;
+  position: absolute;
+}
+
+#player2-prison {
+  top: 300px;
+  right: 10px;
+  flex-direction: row;
+  align-items: flex-end;
+  position: absolute;
+}
+
+.prison .card {
+  width: 50px;
+  height: 75px;
+  font-size: 12px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.prison .card img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.prison .card .card-value {
+  font-size: 10px;
+}
+
+.highlight-cards .card {
+  outline: 2px solid yellow;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.clickable:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+}
+
+#bounty-hunter-pile {
+  width: 100px;
+  height: 150px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
